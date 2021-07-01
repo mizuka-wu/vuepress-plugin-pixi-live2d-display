@@ -13,6 +13,9 @@
 </template>
 
 <script>
+/**
+ * @see https://github.com/QiShaoXuan/vuepress-plugin-cat/blob/master/cat.vue
+ */
 import live2dJSString from "./live2d";
 
 if (!window.loadlive2d) {

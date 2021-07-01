@@ -10,6 +10,10 @@ module.exports = function(option = {}) {
             value = `() => (${JSON.stringify(value)})`
             break
           }
+          case 'string': {
+            value = JSON.stringify(value)
+            break
+          }
           default: {
             break
           }
