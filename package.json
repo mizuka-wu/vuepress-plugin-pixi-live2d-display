@@ -1,0 +1,23 @@
+{
+  "name": "vuepress-plugin-live2d",
+  "version": "1.0.0",
+  "description": "use live2d in vuepress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mizuka-wu/vuepress-plugin-live2d.git"
+  },
+  "keywords": [
+    "vuepress",
+    "live2d"
+  ],
+  "author": "mizuka.wu@outlook.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mizuka-wu/vuepress-plugin-live2d/issues"
+  },
+  "homepage": "https://github.com/mizuka-wu/vuepress-plugin-live2d#readme"
+}
