@@ -6,7 +6,8 @@ module.exports = (option) => {
     return {
         enhanceAppFiles() {
             return [
-                resolve(__dirname, 'live2dcubismcore.min.js'),
+                // 注入lib
+                resolve(__dirname, 'live2d.js'),
                 {
                     // 注入component
                     name: 'Live2dComponent',
