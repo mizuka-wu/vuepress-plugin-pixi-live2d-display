@@ -1,24 +1,34 @@
 <template>
-  <div>hello</div>
+  <div>{{ width }}</div>
 </template>
 
 <script>
-/**
- * @see https://www.npmjs.com/package/vue-live2d
- */
-import isMobile from 'is-mobile'
-import vueLive2d from 'vue-live2d'
-
+import live2dJSString from "./live2d";
 export default {
-    name: 'Live2d',
-    components: {
-        // vueLive2d
-    },
-    data() {
-        return {
-            isMobile: isMobile()
-        }
-    },
+  props: {
+    width: {
+      type: Number,
+      default: 500
+    }
+  },
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    initLive2d() {
+      console.log('初始化')
+    }
+  },
+  mounted() {
+    this.initLive2d()
+    this.$router.afterEach((to, from) => {
+      if (to.path !== from.path) {
+        this.initLive2d();
+      }
+    });
+  },
 }
 </script>
 

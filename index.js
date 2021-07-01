@@ -1,7 +1,14 @@
 
-const { resolve } = require("path");
+const enhanceAppFile = require('./enhanceAppFile')
 
-module.exports = {
-  enhanceAppFiles: resolve(__dirname, "enhanceAppFile.js"),
-  globalUIComponents: "Live2d"
+module.exports = (option) => {
+    return {
+        enhanceAppFiles() {
+            return {
+                name: 'dynamic-code',
+                content: enhanceAppFile(option)
+            }
+        },
+        globalUIComponents: "Live2d"
+      }
 };
