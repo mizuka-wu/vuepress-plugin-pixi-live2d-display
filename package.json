@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/mizuka-wu/vuepress-plugin-live2d/issues"
   },
-  "homepage": "https://github.com/mizuka-wu/vuepress-plugin-live2d#readme"
+  "homepage": "https://github.com/mizuka-wu/vuepress-plugin-live2d#readme",
+  "dependencies": {
+    "is-mobile": "^3.0.0",
+    "vue-live2d": "^1.2.4"
+  }
 }
