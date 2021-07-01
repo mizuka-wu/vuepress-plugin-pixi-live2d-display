@@ -16,13 +16,6 @@
 /**
  * @see https://github.com/QiShaoXuan/vuepress-plugin-cat/blob/master/cat.vue
  */
-import live2dJSString from "./live2d";
-
-if (!window.loadlive2d) {
-  const script = document.createElement("script");
-  script.innerHTML = live2dJSString;
-  document.body.appendChild(script);
-}
 
 export default {
   props: {
