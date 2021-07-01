@@ -12,7 +12,7 @@ module.exports = (option) => {
                     name: "live2dcubismcore.min.js",
                     content: `
                     const scriptElement = document.createElement('script')
-                    scriptElement.src = "https://cdn.jsdelivr.net/gh/litstronger/live2d-​moc3@master/js/frame/live2dcubismcore.min.js"
+                    scriptElement.src = "https://cubism.live2d.com/sdk-web/​cubismcore/live2dcubismcore.min.js"
                     document.body.appendChild(scriptElement)
                     `
                 },
