@@ -82,6 +82,9 @@ export default {
 
 <style>
 .live2d-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   right: 20px;
   bottom: 20px;
