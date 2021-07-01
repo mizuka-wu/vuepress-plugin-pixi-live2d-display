@@ -89,7 +89,12 @@ export default {
   right: 20px;
   bottom: 20px;
   z-index: 80;
-  width: 300px;
-  height: 300px;
+  width: 100px;
+  height: 100px;
+}
+
+.live2d-container canvas {
+  width: 100%;
+  height: 100%;
 }
 </style>
