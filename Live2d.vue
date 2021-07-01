@@ -1,15 +1,5 @@
 <template>
-  <div
-    :style="containerStyle"
-    class="live2d-container"
-    v-show="isLoaded"
-  >
-    <canvas
-      height="100%"
-      id="vuepress-live2d"
-      width="100%"
-    />
-  </div>
+  <div :style="containerStyle" class="live2d-container" id="vuepress-live2d" v-show="isLoaded"></div>
 </template>
 
 <script>
@@ -30,14 +20,34 @@ export default {
       type: Boolean,
       default: false
     },
-    model: {
+    width: {
+      type: Number,
+      default: 500
+    },
+    height: {
+      type: Number,
+      default: 300
+    },
+    basePath: {
       type: String,
-      default: "https://cdn.jsdelivr.net/gh/QiShaoXuan/live2DModel@1.0.0/live2d-widget-model-tororo/assets/tororo.model.json"
-    }
+      default: "https://cdn.jsdelivr.net/npm/live2dv3@latest/assets"
+    },
+    modelName: {
+      type: String,
+      default: "biaoqiang_3"
+    },
+    /**
+     * 延迟多久加载
+     */
+    delay: {
+      type: Number,
+      default: 1000
+    },
   },
   data() {
     const isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
     return {
+      viewer: null,
       isLoaded: true,
       isMobile
     }
@@ -56,12 +66,20 @@ export default {
       }
 
       setTimeout(() => {
-        if (window.loadlive2d) {
-          window.loadlive2d('vuepress-live2d', this.model)
+        if (window.l2dViewer) {
+          this.viewer = new l2dViewer({
+            el: document.getElementById('vuepress-live2d'),
+            mobileLimit: this.mobile,
+            width: this.width,
+            height: this.height,
+            basePath: this.basePath,
+            modelName: this.modelName,
+          })
         } else {
+          this.isLoaded = false
           console.log('未能成功加载live2d基础库')
         }
-      }, 500)
+      }, 1000)
       
     }
   },
@@ -85,12 +103,10 @@ export default {
   right: 20px;
   bottom: 20px;
   z-index: 80;
-  width: 100px;
-  height: 100px;
 }
 
 .live2d-container canvas {
-  width: 100%;
-  height: 100%;
+  width: 500px;
+  height: 300px;
 }
 </style>
