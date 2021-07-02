@@ -27,7 +27,7 @@ export default {
     },
     model: {
       type: String,
-      default: "https://cdn.jsdelivr.net/npm/live2dv3@latest/assets/biaoqiang_3/biaoqiang_3.model3.json"
+      default: ""
     },
     offsetX: {
       type: Number,
@@ -73,6 +73,10 @@ export default {
 
       setTimeout(async () => {
         // 加载基础库成功
+        if (!this.model) {
+          console.warn("请设置模型地址")
+          return 0
+        }
         if (window.PIXI && window.PIXI.live2d) {
           const view = document.getElementById('vuepress-live2d')
           const PIXI = window.PIXI
