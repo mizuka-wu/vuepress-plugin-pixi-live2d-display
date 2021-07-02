@@ -1,10 +1,13 @@
 <template>
   <div
-    :style="containerStyle"
+    :style="{...containerStyle, width: `${width}px`, height: `${height}px`}"
     class="live2d-container"
     v-show="isLoaded"
   >
-    <canvas id="vuepress-live2d"></canvas>
+    <canvas
+      :style="{ width: `${width}px`, height: `${height}px` }"
+      id="vuepress-live2d"
+    ></canvas>
   </div>
 </template>
 
@@ -27,7 +30,7 @@ export default {
     },
     width: {
       type: Number,
-      default: 500
+      default: 400
     },
     height: {
       type: Number,
@@ -72,18 +75,18 @@ export default {
           const view = document.getElementById('vuepress-live2d')
           const PIXI = window.PIXI
           const Live2DModel = window.PIXI.live2d.Live2DModel
-          console.log(PIXI, Live2DModel)
           const app = new PIXI.Application({
+            transparent: true,
             view
           })
           const model = await Live2DModel.from(this.model);
           app.stage.addChild(model);
           // transforms
-          model.x = 100;
-          model.y = 100;
+          model.x = this.width / 2;
+          model.y = this.height / 2;
           model.rotation = Math.PI;
           model.skew.x = Math.PI;
-          model.scale.set(2, 2);
+          model.scale.set(0.1, 0.1);
           model.anchor.set(0.5, 0.5);
 
           // interaction
