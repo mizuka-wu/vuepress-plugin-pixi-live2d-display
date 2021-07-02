@@ -2,24 +2,17 @@
 const enhanceAppFile = require('./enhanceAppFile')
 const {resolve} = require('path')
 
+const resolveLib = function(...paths) {
+    return resolve(__dirname, 'lib', ...paths)
+}
+
 module.exports = (option) => {
     return {
+        // 注入component
         enhanceAppFiles() {
             return [
-                // 注入lib
-                // resolve(__dirname, 'lib', 'live2dcubismcore.js'),
+                resolveLib('index.js'),
                 {
-                    name: "live2dcubismcore.min.js",
-                    content: `
-                    const scriptElement = document.createElement('script')
-                    scriptElement.src = "https://cubism.live2d.com/sdk-web/​cubismcore/live2dcubismcore.min.js"
-                    document.body.appendChild(scriptElement)
-                    `
-                },
-                resolve(__dirname, 'lib', 'pixi.js'),
-                resolve(__dirname, 'lib', 'pixi-live2d-display.js'),
-                {
-                    // 注入component
                     name: 'Live2dComponent',
                     content: enhanceAppFile(option)
                 }

@@ -18,8 +18,7 @@ module.exports = function(option = {}) {
             break
           }
         }
-
-        return `Live2d.props.${key}.default = ${value}`
+        return `(Live2d.props.${key} || {}).default = ${value}`
       }).join('\n')}  
       Vue.component("Live2d", Live2d);
     };`
