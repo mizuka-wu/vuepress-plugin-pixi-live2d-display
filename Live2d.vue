@@ -47,6 +47,10 @@ export default {
       type: Number,
       default: 2000
     },
+    scale: {
+      type: Number,
+      default: 1
+    }
   },
   data() {
     const isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
@@ -81,13 +85,17 @@ export default {
           })
           const model = await Live2DModel.from(this.model);
           app.stage.addChild(model);
-          // transforms
-          model.x = this.width / 2;
-          model.y = this.height / 2;
+          // 改变模组大小
+          const {width, height} = model
+
           model.rotation = Math.PI;
           model.skew.x = Math.PI;
-          model.scale.set(0.1, 0.1);
+          // 缩放到符合比例
+          model.scale.set(this.width / width * 1.5 * this.scale, this.height / height * 1.5 * this.scale);
           model.anchor.set(0.5, 0.5);
+
+          model.x = this.width;
+          model.y = this.height;
 
           // interaction
           model.on('hit', hitAreas => {
