@@ -1,4 +1,4 @@
-# vuepress live2d插件
+# vuepress pixi-live2d-display插件
 
 感谢[vuepress-plugin-cat](https://github.com/QiShaoXuan/vuepress-plugin-cat/blob/master/cat.vue)给的灵感
 
@@ -11,11 +11,11 @@
 
 ## 安装
 ```bash
-npm i vuepress-plugin-live2d
+npm i vuepress-plugin-pixi-live2d-display
 
 or
 
-yarn add vuepress-plugin-live2d
+yarn add vuepress-plugin-pixi-live2d-display
 ```
 
 ## 使用
@@ -23,7 +23,7 @@ yarn add vuepress-plugin-live2d
 ```
 module.exports = {
   plugins: [
-      ['vuepress-plugin-live2d', { model: "你的模型地址" }]
+      ['vuepress-plugin-pixi-live2d-display', { model: "你的模型地址" }]
   ]
 }
 ```
@@ -39,4 +39,22 @@ module.exports = {
 | delay          | number  | false | 2000  | 受限于引入依赖库的问题，需要延迟加载模型，延迟的时间，建议至少大于1s |
 | scale          | number  | false | 1     | 模型缩放                                                             |
 
+## 开发
+### 实现原理
+挂载了一个`Live2d.vue`放在右下角来加载`live2d`的模型文件，内部使用`pixi-live2d-display`实现
+
+#### 文件说明
+- `index.js` 主入口，加载插件，包含加载`lib`和挂载全局的`vue`文件
+- `enhanceAppFile` 向`vuepress`运行时注入一个支持设定`props`的`vue`文件
+- `live2d.vue` 显示组件
+- `lib/index.js` 向`html`内注入所需的第三方`js`
+- `lib/*.js` 第三方`js`,实际上未使用
+
+#### 传参的魔改原理
+官方文档没找到如果正确给`ui`组件传参数，所以魔改了一个，具体代码看`enhanceAppFile`和`index.js`内引用`enhanceAppFile`的方式
+
+魔改`vue`文件的`props`的`default`属性
+## 参考
+- [vuepress-plugin-cat](https://github.com/QiShaoXuan/vuepress-plugin-cat/blob/master/cat.vue)
+- [pixi-live2d-display](https://github.com/guansss/pixi-live2d-display/blob/master/README.zh.md)
 
