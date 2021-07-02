@@ -1,12 +1,17 @@
 <template>
-  <div :style="containerStyle" class="live2d-container" id="vuepress-live2d" v-show="isLoaded"></div>
+  <div
+    :style="containerStyle"
+    class="live2d-container"
+    v-show="isLoaded"
+  >
+    <canvas id="vuepress-live2d"></canvas>
+  </div>
 </template>
 
 <script>
 /**
  * @see https://github.com/QiShaoXuan/vuepress-plugin-cat/blob/master/cat.vue
  */
-
 export default {
   props: {
     containerStyle: {
@@ -28,20 +33,16 @@ export default {
       type: Number,
       default: 300
     },
-    basePath: {
+    model: {
       type: String,
-      default: "https://cdn.jsdelivr.net/npm/live2dv3@latest/assets"
-    },
-    modelName: {
-      type: String,
-      default: "biaoqiang_3"
+      default: "https://cdn.jsdelivr.net/npm/live2dv3@latest/assets/biaoqiang_3/biaoqiang_3.model3.json"
     },
     /**
      * 延迟多久加载
      */
     delay: {
       type: Number,
-      default: 1000
+      default: 2000
     },
   },
   data() {
@@ -65,21 +66,38 @@ export default {
         return 0
       }
 
-      setTimeout(() => {
-        if (window.l2dViewer) {
-          this.viewer = new l2dViewer({
-            el: document.getElementById('vuepress-live2d'),
-            mobileLimit: this.mobile,
-            width: this.width,
-            height: this.height,
-            basePath: this.basePath,
-            modelName: this.modelName,
+      setTimeout(async () => {
+        // 加载基础库成功
+        if (window.PIXI && window.PIXI.live2d) {
+          const view = document.getElementById('vuepress-live2d')
+          const PIXI = window.PIXI
+          const Live2DModel = window.PIXI.live2d.Live2DModel
+          console.log(PIXI, Live2DModel)
+          const app = new PIXI.Application({
+            view
           })
+          const model = await Live2DModel.from(this.model);
+          app.stage.addChild(model);
+          // transforms
+          model.x = 100;
+          model.y = 100;
+          model.rotation = Math.PI;
+          model.skew.x = Math.PI;
+          model.scale.set(2, 2);
+          model.anchor.set(0.5, 0.5);
+
+          // interaction
+          model.on('hit', hitAreas => {
+            if (hitAreas.includes('body')) {
+              model.motion('tap_body');
+            }
+          });
+
         } else {
           this.isLoaded = false
           console.log('未能成功加载live2d基础库')
         }
-      }, 1000)
+      }, this.delay)
       
     }
   },
