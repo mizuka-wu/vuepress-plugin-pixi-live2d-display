@@ -1,6 +1,6 @@
 {
   "name": "vuepress-plugin-pixi-live2d-display",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "use live2d in vuepress",
   "main": "index.js",
   "scripts": {
