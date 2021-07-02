@@ -1,13 +1,10 @@
 <template>
   <div
-    :style="{...containerStyle, width: `${width}px`, height: `${height}px`}"
+    :style="containerStyle"
     class="live2d-container"
     v-show="isLoaded"
   >
-    <canvas
-      :style="{ width: `${width}px`, height: `${height}px` }"
-      id="vuepress-live2d"
-    ></canvas>
+    <canvas id="vuepress-live2d"></canvas>
   </div>
 </template>
 
@@ -28,14 +25,6 @@ export default {
       type: Boolean,
       default: false
     },
-    width: {
-      type: Number,
-      default: 400
-    },
-    height: {
-      type: Number,
-      default: 300
-    },
     model: {
       type: String,
       default: "https://cdn.jsdelivr.net/npm/live2dv3@latest/assets/biaoqiang_3/biaoqiang_3.model3.json"
@@ -55,6 +44,7 @@ export default {
   data() {
     const isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
     return {
+      height: this.width,
       viewer: null,
       isLoaded: true,
       isMobile
@@ -79,23 +69,27 @@ export default {
           const view = document.getElementById('vuepress-live2d')
           const PIXI = window.PIXI
           const Live2DModel = window.PIXI.live2d.Live2DModel
+          const model = await Live2DModel.from(this.model);
+          const {width, height} = model
+
           const app = new PIXI.Application({
             transparent: true,
+            width,
+            height,
             view
           })
-          const model = await Live2DModel.from(this.model);
           app.stage.addChild(model);
           // 改变模组大小
-          const {width, height} = model
 
           model.rotation = Math.PI;
           model.skew.x = Math.PI;
-          // 缩放到符合比例
-          model.scale.set(this.width / width * 1.5 * this.scale, this.height / height * 1.5 * this.scale);
+          model.x = width / 2
+          model.y = height / 2
           model.anchor.set(0.5, 0.5);
+          window.model = model
 
-          model.x = this.width;
-          model.y = this.height;
+          // 缩放到符合比例
+          model.scale.set(this.scale, this.scale);
 
           // interaction
           model.on('hit', hitAreas => {
@@ -114,11 +108,11 @@ export default {
   },
   mounted() {
     this.initLive2d()
-    this.$router.afterEach((to, from) => {
-      if (to.path !== from.path) {
-        this.initLive2d();
-      }
-    });
+    // this.$router.afterEach((to, from) => {
+    //   if (to.path !== from.path) {
+    //     this.initLive2d();
+    //   }
+    // });
   },
 }
 </script>
@@ -129,13 +123,17 @@ export default {
   justify-content: center;
   align-items: center;
   position: fixed;
+  width: 400px;
+  height: 400px;
   right: 20px;
   bottom: 20px;
   z-index: 80;
 }
 
 .live2d-container canvas {
-  width: 500px;
-  height: 300px;
+  max-width: 100%;
+  max-height: 100%;
+  /* width: 500px;
+  height: 300px; */
 }
 </style>
