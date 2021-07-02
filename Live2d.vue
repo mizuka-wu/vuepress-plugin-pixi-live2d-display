@@ -29,6 +29,14 @@ export default {
       type: String,
       default: "https://cdn.jsdelivr.net/npm/live2dv3@latest/assets/biaoqiang_3/biaoqiang_3.model3.json"
     },
+    offsetX: {
+      type: Number,
+      default: 0
+    },
+    offsetY: {
+      type: Number,
+      default: 0
+    },
     /**
      * 延迟多久加载
      */
@@ -83,12 +91,13 @@ export default {
 
           model.rotation = Math.PI;
           model.skew.x = Math.PI;
-          model.x = width / 2
-          model.y = height / 2
           model.anchor.set(0.5, 0.5);
-          window.model = model
 
-          // 缩放到符合比例
+          // 位置
+          model.x = width / 2 + this.offsetX
+          model.y = height / 2 + this.offsetY
+
+          // 缩放
           model.scale.set(this.scale, this.scale);
 
           // interaction
