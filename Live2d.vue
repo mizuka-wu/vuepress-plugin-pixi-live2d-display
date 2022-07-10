@@ -140,7 +140,7 @@ export default {
   height: 400px;
   right: 20px;
   bottom: 20px;
-  z-index: 80;
+  z-index: 0;
 }
 
 .live2d-container canvas {
